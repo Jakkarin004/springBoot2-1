@@ -1,0 +1,20 @@
+---
+server:
+  port: 8778
+  
+spring:
+  profiles: dev
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mysql://localhost:3306/jakkarin?useUnicode=yes&characterEncoding=UTF-8&characterSetResults=UTF-8
+      username: root
+      password: 
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      maximum-pool-size: 2
+      max-lifetime: 180000
+  jpa:
+    show-sql: true
+
+service-config:
+  url:
+    swagger-host:
