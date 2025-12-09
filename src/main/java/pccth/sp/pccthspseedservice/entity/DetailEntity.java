@@ -17,9 +17,9 @@ import javax.persistence.TemporalType;
 public class DetailEntity {
 	private Integer id;
 	private String vdtNo;
-	private String bookNo;
-	private Integer bookNum;
-	private Date dateMake;
+	private Integer bookNo;
+	private String bookNum;
+	private String dateMake;
 	private String nameCompany;
 	
 	private BigDecimal totalPrice;
@@ -29,8 +29,8 @@ public class DetailEntity {
 	private BigDecimal refunfFr;
 	
 	
-	private Integer idName;
-	private Integer noBranch;
+	private String idName;
+	private String noBranch;
 	
 	private String createBy;
 	private Date createDate;
@@ -44,9 +44,9 @@ public class DetailEntity {
 	}
 
 
-	public DetailEntity(Integer id, String vdtNo, String bookNo, Integer bookNum, Date dateMake, String nameCompany,
+	public DetailEntity(Integer id, String vdtNo, Integer bookNo, String bookNum, String dateMake, String nameCompany,
 			BigDecimal totalPrice, BigDecimal taxAt, BigDecimal taxRd, BigDecimal taxRa, BigDecimal refunfFr,
-			Integer idName, Integer noBranch, String createBy, Date createDate, Date updateDate, String updateBy) {
+			String idName, String noBranch, String createBy, Date createDate, Date updateDate, String updateBy) {
 		super();
 		this.id = id;
 		this.vdtNo = vdtNo;
@@ -93,32 +93,32 @@ public class DetailEntity {
 
 
 	@Column(name = "book_no")
-	public String getBookNo() {
+	public Integer getBookNo() {
 		return bookNo;
 	}
 
 
-	public void setBookNo(String bookNo) {
+	public void setBookNo(Integer bookNo) {
 		this.bookNo = bookNo;
 	}
 
 	@Column(name = "book_num")
-	public Integer getBookNum() {
+	public String getBookNum() {
 		return bookNum;
 	}
 
 
-	public void setBookNum(Integer bookNum) {
+	public void setBookNum(String bookNum) {
 		this.bookNum = bookNum;
 	}
 
 	@Column(name = "date_make")
-	public Date getDateMake() {
+	public String getDateMake() {
 		return dateMake;
 	}
 
 
-	public void setDateMake(Date dateMake) {
+	public void setDateMake(String dateMake) {
 		this.dateMake = dateMake;
 	}
 
@@ -187,23 +187,23 @@ public class DetailEntity {
 
 
 	@Column(name = "id_name",precision = 10, scale = 2)
-	public Integer getIdName() {
+	public String getIdName() {
 		return idName;
 	}
 
 
-	public void setIdName(Integer idName) {
+	public void setIdName(String idName) {
 		this.idName = idName;
 	}
 
 
 	@Column(name = "no_branch")
-	public Integer getNoBranch() {
+	public String getNoBranch() {
 		return noBranch;
 	}
 
 
-	public void setNoBranch(Integer noBranch) {
+	public void setNoBranch(String noBranch) {
 		this.noBranch = noBranch;
 	}
 
@@ -213,8 +213,6 @@ public class DetailEntity {
 		return createBy;
 	}
 
-
-	
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import pccth.sp.pccthspseedservice.model.DetailModel;
 import pccth.sp.pccthspseedservice.model.HeaderModel;
@@ -17,17 +18,8 @@ public class MainJDBCRepository {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
-	
-	public List<HeaderModel> findVate() {
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT * FROM jakkarin.header");
 		
-		List<HeaderModel> list = jdbcTemplate.query(sql.toString(),new BeanPropertyRowMapper(HeaderModel.class));
-		return list;
-	};
-	
-	
+	//ค้นหาตัวววววว
 	public List<DetailModel> findDetailByVdtNo(String vdtNo) {
 	    StringBuilder sql = new StringBuilder();
 	    sql.append("SELECT ")
@@ -58,6 +50,7 @@ public class MainJDBCRepository {
 	    );
 	}
 
+	//ค้นหาหัวววววววววว
 	public List<HeaderModel> searchHeader(String vdtNo, String vdtDate) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT vdt_no, vdt_date, create_by,create_date ")
@@ -66,12 +59,22 @@ public class MainJDBCRepository {
 
 	    List<Object> params = new ArrayList<>();
 
-	    if (vdtNo != null && !vdtNo.isEmpty()) {
+//	    if (vdtNo != null && !vdtNo.isEmpty()) {
+//	        sql.append(" AND h.vdt_no = ?");
+//	        params.add(vdtNo);
+//	    }
+//
+//	    if (vdtDate != null && !vdtDate.isEmpty()) {
+//	        sql.append(" AND h.vdt_date = ?");
+//	        params.add(vdtDate);
+//	    }
+	    
+	    if (StringUtils.hasText(vdtNo)) {
 	        sql.append(" AND h.vdt_no = ?");
 	        params.add(vdtNo);
 	    }
 
-	    if (vdtDate != null && !vdtDate.isEmpty()) {
+	    if (StringUtils.hasText(vdtDate)) {
 	        sql.append(" AND h.vdt_date = ?");
 	        params.add(vdtDate);
 	    }
@@ -83,8 +86,23 @@ public class MainJDBCRepository {
 	    );
 	}
 
-	
 	// method สำหรับการเพิ่ม
+	//เช็คเพื่ออัพเดท
+	public boolean existsDetail(String vdtNo, int id) {
+	    String sql = "SELECT COUNT(*) FROM jakkarin.detail WHERE vdt_no = ? AND id = ?";
+	    Integer count = jdbcTemplate.queryForObject(sql, Integer.class, vdtNo, id);
+	    return count != null && count > 0;
+	}
+	
+	//แยก
+//	public void saveOrUpdateDetail(DetailModel detailModel) {
+//	    if (existsDetail(detailModel.getVdtNo(), detailModel.getId())) {
+//	        updateDetail(detailModel);// มีแล้ว update แทน
+//	    } else {
+//	        insertDetail(detailModel);// ไม่มี insert
+//	    }
+//	}
+	
 	// method สำหรับการ check header 
 	public boolean checkHeader(String vdtNo) {
 		String sql = "SELECT COUNT(*) FROM jakkarin.header WHERE vdt_no = ?";
@@ -100,20 +118,6 @@ public class MainJDBCRepository {
 				headerModel.getVdtNo(),
 				headerModel.getCreateBy()
 				);
-	}
-	
-	public boolean existsDetail(String vdtNo, String bookNo) {
-	    String sql = "SELECT COUNT(*) FROM jakkarin.detail WHERE vdt_no = ? AND book_no = ?";
-	    Integer count = jdbcTemplate.queryForObject(sql, Integer.class, vdtNo, bookNo);
-	    return count != null && count > 0;
-	}
-	
-	public void saveOrUpdateDetail(DetailModel detailModel) {
-	    if (existsDetail(detailModel.getVdtNo(), detailModel.getBookNo())) {
-	        updateDetail(detailModel);   // ← มีแล้ว → update แทน
-	    } else {
-	        insertDetail(detailModel);   // ← ไม่มี → insert
-	    }
 	}
 	
 	public void insertDetail(DetailModel detailModel) {
@@ -153,11 +157,11 @@ public class MainJDBCRepository {
 	    sql.append("id_name = ?, ");
 	    sql.append("no_branch = ?, ");
 	    sql.append("update_by = ?, ");
-	    sql.append("update_date = CURRENT_TIMESTAMP() ");
+	    sql.append("update_date = CASE WHEN ? IS NULL THEN NULL ELSE CURRENT_TIMESTAMP() END ");
 	    sql.append("WHERE vdt_no = ? AND id = ?");
 
 	    jdbcTemplate.update(sql.toString(),
-	    	detail.getBookNo(),
+	        detail.getBookNo(),
 	        detail.getBookNum(),
 	        detail.getDateMake(),
 	        detail.getNameCompany(),
@@ -168,33 +172,41 @@ public class MainJDBCRepository {
 	        detail.getRefunfFr(),
 	        detail.getIdName(),
 	        detail.getNoBranch(),
-	        detail.getUpdateBy(),
+	        detail.getUpdateBy(),// สำหรับ update_by
+	        detail.getUpdateBy(),// สำหรับตรวจ null
 	        detail.getVdtNo(),
 	        detail.getId()
 	    );
 	}
+
 
 	public List<RdbvrtrateModel> getAllVatRate(){
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT saleFROM, saleTO, vrtRATE, vrtRATEAG FROM jakkarin.rdbvrtrate ");
 		
 		return jdbcTemplate.query(sql.toString(),(rs,rowNum) -> {
-			RdbvrtrateModel rdbvrtrateModel = new RdbvrtrateModel();
-				rdbvrtrateModel.setSaleFROM(rs.getInt("saleFROM"));
+			RdbvrtrateModel rdbvrtrateModel = new RdbvrtrateModel(); //สร้าง object
+				rdbvrtrateModel.setSaleFROM(rs.getInt("saleFROM"));//ดึงค่าเป็น int และเอาไปเก็บใน object
 				rdbvrtrateModel.setSaleTO(rs.getInt("saleTO"));
 				rdbvrtrateModel.setVrtRATE(rs.getInt("vrtRATE"));
 				rdbvrtrateModel.setVrtRATEAG(rs.getInt("vrtRATEAG"));
-		        return rdbvrtrateModel;
+		        return rdbvrtrateModel; // ส่งค่ากลับไปที่ List
 		});
 	}
-	
 	
 	public void deleteData(int id) {
 		String sql = "DELETE FROM jakkarin.detail WHERE id = ?";
 		jdbcTemplate.update(sql,id);
 	}
 	
-	
+	public List<RdbvrtrateModel> findVatTax() {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * FROM jakkarin.rdbvrtrate");
+		
+		List<RdbvrtrateModel> list = jdbcTemplate.query(sql.toString(),
+				new BeanPropertyRowMapper(RdbvrtrateModel.class));
+		return list;
+	}
 	
 	
 }

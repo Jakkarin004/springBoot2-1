@@ -12,13 +12,13 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="vdtNo" class="java.lang.String"/>
 	<parameter name="vdtDate" class="java.lang.String"/>
+	<parameter name="Today" class="java.sql.Date"/>
+	<parameter name="dateMake" class="java.sql.Date"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="birthday" class="java.lang.String"/>
-	<field name="age" class="java.lang.Integer"/>
-	<field name="bookNo" class="java.lang.String"/>
-	<field name="bookNum" class="java.lang.Integer"/>
+	<field name="bookNo" class="java.lang.Integer"/>
+	<field name="bookNum" class="java.lang.String"/>
 	<field name="dateMake" class="java.sql.Date"/>
 	<field name="nameCompany" class="java.lang.String"/>
 	<field name="totalPrice" class="java.math.BigDecimal"/>
@@ -26,12 +26,6 @@
 	<field name="taxRd" class="java.math.BigDecimal"/>
 	<field name="taxRa" class="java.math.BigDecimal"/>
 	<field name="refunfFr" class="java.math.BigDecimal"/>
-	<variable name="birthday1" class="java.lang.Integer" resetType="Column" calculation="Count">
-		<variableExpression><![CDATA[$F{birthday}]]></variableExpression>
-	</variable>
-	<variable name="sumAge" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{age}]]></variableExpression>
-	</variable>
 	<variable name="sumPrice" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalPrice}]]></variableExpression>
 	</variable>
@@ -41,49 +35,40 @@
 	<variable name="sumTaxRd" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{taxRd}]]></variableExpression>
 	</variable>
-	<variable name="sumTaxRa" class="java.lang.String" calculation="Sum">
+	<variable name="sumTaxRa" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{taxRa}]]></variableExpression>
 	</variable>
 	<variable name="sumRefunfFr" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{refunfFr}]]></variableExpression>
 	</variable>
-	<background>
-		<band height="60" splitType="Stretch">
-			<staticText>
-				<reportElement x="633" y="8" width="100" height="30" uuid="ac2b1001-02a0-40ff-9fa8-c92ec824fe54"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="16"/>
-				</textElement>
-				<text><![CDATA[วันที่พิมพ์ :]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="690" y="8" width="100" height="30" uuid="3829fb5b-35ff-40a7-91f4-57529d30233b"/>
-				<textFieldExpression><![CDATA[$P{vdtDate}]]></textFieldExpression>
-			</textField>
-		</band>
-	</background>
 	<title>
 		<band height="35" splitType="Stretch">
 			<staticText>
 				<reportElement x="10" y="0" width="100" height="30" uuid="ed634014-197f-4143-bbae-1d635a3406f0"/>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="16"/>
 				</textElement>
-				<text><![CDATA[เลขขอใบสรุป :]]></text>
+				<text><![CDATA[เลขใบสรุป :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="548" y="0" width="100" height="30" uuid="a774f50e-6dae-43d0-9463-99d09dc6e765"/>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="16"/>
 				</textElement>
 				<text><![CDATA[วันที่ :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="80" y="0" width="186" height="30" uuid="44156802-2b46-49b9-9147-a408ffc37e64"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{vdtNo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="583" y="0" width="100" height="30" uuid="715e154e-59c1-4c36-8502-63881c3aeebe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{vdtDate}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -254,8 +239,8 @@
 	</columnHeader>
 	<detail>
 		<band height="30" splitType="Stretch">
-			<textField>
-				<reportElement x="9" y="0" width="106" height="30" uuid="8c292db7-15ae-4fc0-a778-de4b12a9aaa3">
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" x="9" y="0" width="106" height="30" uuid="8c292db7-15ae-4fc0-a778-de4b12a9aaa3">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d59ff825-38f7-4f8b-a6c6-d9b400a3f953"/>
 				</reportElement>
 				<box leftPadding="4">
@@ -264,10 +249,13 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{bookNo}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="115" y="0" width="99" height="30" uuid="15d06c6e-26fa-4871-8428-7f3718a679aa">
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" x="115" y="0" width="99" height="30" uuid="15d06c6e-26fa-4871-8428-7f3718a679aa">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0fdca8b2-8e6e-4e81-8467-d4c199505b96"/>
 				</reportElement>
 				<box leftPadding="4">
@@ -276,22 +264,13 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{bookNum}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="214" y="0" width="86" height="30" uuid="5ae9c614-ec81-4d74-b6b1-a54feee0ad81">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1e3a6767-0670-4b1c-9b9b-efbaf3332caf"/>
-				</reportElement>
-				<box leftPadding="4">
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textFieldExpression><![CDATA[$F{dateMake}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="300" y="0" width="99" height="30" uuid="2ddc59fd-4b42-4994-baea-82cb715dc262">
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" x="300" y="0" width="99" height="30" uuid="2ddc59fd-4b42-4994-baea-82cb715dc262">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="76e0d455-4d3b-49c2-9547-cb42af0a0d7a"/>
 				</reportElement>
 				<box leftPadding="4">
@@ -300,10 +279,13 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nameCompany}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="399" y="0" width="62" height="30" uuid="cd6eed8a-976f-4609-bb3c-2c8ba0645dcc">
+			<textField textAdjust="ScaleFont">
+				<reportElement stretchType="RelativeToTallestObject" x="399" y="0" width="62" height="30" uuid="cd6eed8a-976f-4609-bb3c-2c8ba0645dcc">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="03c3757a-5f3f-4b47-b944-eacd0421fbbb"/>
 				</reportElement>
 				<box leftPadding="4">
@@ -312,10 +294,14 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{totalPrice}]]></textFieldExpression>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalPrice} == null ? 0 : 
+  new java.text.DecimalFormat("#,##0.00").format($F{totalPrice})]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="461" y="0" width="64" height="30" uuid="57e5b8cd-4071-4ca0-8f4e-65e6722da803">
+			<textField textAdjust="ScaleFont">
+				<reportElement stretchType="RelativeToTallestObject" x="461" y="0" width="64" height="30" uuid="57e5b8cd-4071-4ca0-8f4e-65e6722da803">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1faa0b07-9817-4a2d-81fa-bfbf478bda9e"/>
 				</reportElement>
 				<box leftPadding="4">
@@ -324,10 +310,14 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{taxAt}]]></textFieldExpression>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxAt} == null ? 0 : 
+  new java.text.DecimalFormat("#,##0.00").format($F{taxAt})]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="525" y="0" width="78" height="30" uuid="2ef9d082-917b-44b1-a340-316014a286f5">
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" x="525" y="0" width="78" height="30" uuid="2ef9d082-917b-44b1-a340-316014a286f5">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a6704c7d-4495-4dd6-854b-2703ddbc6441"/>
 				</reportElement>
 				<box leftPadding="4">
@@ -336,10 +326,14 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{taxRd}]]></textFieldExpression>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxRd} == null ? 0 : 
+  new java.text.DecimalFormat("#,##0.00").format($F{taxRd})]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="603" y="0" width="82" height="30" uuid="dd34eec5-978d-415c-815f-1d795fb966b6">
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" x="603" y="0" width="82" height="30" uuid="dd34eec5-978d-415c-815f-1d795fb966b6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2c34901e-a9ce-43f5-acc5-f513d8d06a8e"/>
 				</reportElement>
 				<box leftPadding="4">
@@ -348,10 +342,14 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{taxRa}]]></textFieldExpression>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxRa} == null ? 0 : 
+  new java.text.DecimalFormat("#,##0.00").format($F{taxRa})]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="685" y="0" width="106" height="30" uuid="ae9cd133-e189-475d-873b-4c4eb9238494">
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" x="685" y="0" width="106" height="30" uuid="ae9cd133-e189-475d-873b-4c4eb9238494">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="85bbab77-5e64-4f2b-889f-7fbf82bdcbce"/>
 				</reportElement>
 				<box leftPadding="4">
@@ -360,43 +358,129 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{refunfFr}]]></textFieldExpression>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refunfFr} == null ? 0 : 
+  new java.text.DecimalFormat("#,##0.00").format($F{refunfFr})]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" x="214" y="0" width="86" height="30" uuid="6e606a2f-5f43-42e9-891d-5ee382254f45">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="af6fde00-f538-4c1d-af96-c0cfb0d4eca1"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="pixel"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="4">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateMake}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<summary>
-		<band height="46">
+		<band height="210">
 			<staticText>
-				<reportElement x="300" y="0" width="99" height="30" uuid="4def70bf-a55f-43a7-ad61-6d696db747ab"/>
-				<textElement textAlignment="Right">
+				<reportElement x="300" y="1" width="99" height="30" uuid="4def70bf-a55f-43a7-ad61-6d696db747ab"/>
+				<box rightPadding="4">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="16"/>
 				</textElement>
 				<text><![CDATA[รวม]]></text>
 			</staticText>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="399" y="0" width="62" height="30" uuid="c400b63d-0166-48ef-a8e2-58fdc6dedd9a"/>
-				<box leftPadding="3"/>
-				<textFieldExpression><![CDATA[$V{sumPrice}]]></textFieldExpression>
+				<reportElement x="399" y="1" width="62" height="30" uuid="c400b63d-0166-48ef-a8e2-58fdc6dedd9a"/>
+				<box leftPadding="3">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumPrice} == null ? "0.00" : new java.text.DecimalFormat("#,##0.00").format($V{sumPrice})]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="461" y="0" width="64" height="30" uuid="b05d39f7-1893-4aa5-9fbd-3a73c36ebd60"/>
-				<box leftPadding="3"/>
-				<textFieldExpression><![CDATA[$V{sumTaxAt}]]></textFieldExpression>
+				<reportElement x="461" y="1" width="64" height="30" uuid="b05d39f7-1893-4aa5-9fbd-3a73c36ebd60"/>
+				<box leftPadding="3">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumTaxAt} == null ? "0.00" : new java.text.DecimalFormat("#,##0.00").format($V{sumTaxAt})]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="525" y="0" width="78" height="30" uuid="325a412d-21c3-4913-bcb5-8e160b1797a5"/>
-				<box leftPadding="3"/>
-				<textFieldExpression><![CDATA[$V{sumTaxRd}]]></textFieldExpression>
+				<reportElement x="525" y="1" width="78" height="30" uuid="325a412d-21c3-4913-bcb5-8e160b1797a5"/>
+				<box leftPadding="3">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumTaxRd} == null ? "0.00" : new java.text.DecimalFormat("#,##0.00").format($V{sumTaxRd})]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="603" y="0" width="82" height="30" uuid="3bd0ea98-4a56-48c8-bdd3-0b74b4b6b894"/>
-				<box leftPadding="3"/>
-				<textFieldExpression><![CDATA[$V{sumTaxRa}]]></textFieldExpression>
+				<reportElement x="603" y="1" width="82" height="30" uuid="3bd0ea98-4a56-48c8-bdd3-0b74b4b6b894"/>
+				<box leftPadding="3">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumTaxRa} == null ? "0.00" : new java.text.DecimalFormat("#,##0.00").format($V{sumTaxRa})]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="ScaleFont">
-				<reportElement x="685" y="0" width="106" height="30" uuid="881608bc-e4aa-41fe-a294-145c12450cda"/>
-				<box leftPadding="3"/>
-				<textFieldExpression><![CDATA[$V{sumRefunfFr}]]></textFieldExpression>
+				<reportElement x="685" y="1" width="106" height="30" uuid="881608bc-e4aa-41fe-a294-145c12450cda"/>
+				<box leftPadding="3">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#A7A7AB"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumRefunfFr} == null ? "0.00" : new java.text.DecimalFormat("#,##0.00").format($V{sumRefunfFr})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="634" y="180" width="100" height="30" uuid="ac2b1001-02a0-40ff-9fa8-c92ec824fe54"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<text><![CDATA[วันที่พิมพ์ :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="691" y="180" width="100" height="30" uuid="3829fb5b-35ff-40a7-91f4-57529d30233b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Today}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

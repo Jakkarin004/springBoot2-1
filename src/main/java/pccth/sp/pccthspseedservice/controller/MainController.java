@@ -18,6 +18,7 @@ import pccth.sp.pccthspseedservice.entity.DetailEntity;
 import pccth.sp.pccthspseedservice.entity.HeaderEntity;
 import pccth.sp.pccthspseedservice.model.DetailModel;
 import pccth.sp.pccthspseedservice.model.HeaderModel;
+import pccth.sp.pccthspseedservice.model.RdbvrtrateModel;
 import pccth.sp.pccthspseedservice.response.DetailResponseDataHeader;
 import pccth.sp.pccthspseedservice.service.MainService;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -35,13 +36,6 @@ public class MainController {
         this.api = api;
     }
     
-    @GetMapping("/get-vdt")
-    public List<HeaderModel> getVat() {
-    	return mainService.getVat();
-    }
-    
-   
-    
     @GetMapping("/get-search-header")
     public List<HeaderModel> searchHeader(
     		@RequestParam(required = false) String vdtNo,
@@ -55,14 +49,6 @@ public class MainController {
     	return mainService.findDetailByVdtNo(vdtNo);
     }
     
-//    @PostMapping("save-all-data")
-//    public ResponseEntity<?> saveDataAll(@RequestBody SaveAllDataRequest req) {
-//        // req.getDetails() = Array ของ DetailModel ส่งจาก Angular
-//        mainService.saveDataAll(req.getDetails(), req.getVdtNo());
-//
-//        return ResponseEntity.ok("saved");
-//    }
-    
     @PostMapping("save-all-data")
     public void saveDataAll(@RequestBody SaveAllDataRequest req) {
         if (req.getVdtNo() != null) {
@@ -74,16 +60,21 @@ public class MainController {
                 mainService.updateDetail(d);
             }
         }
-//        return ResponseEntity.ok("saved");
     }
-    
-    
+     
+    @PostMapping("/print-pdf")
+    public ResponseEntity<?> printPdf(@RequestBody List<DetailModel> dataList) {
+        String base64 = mainService.generatePdf(dataList);
+        return ResponseEntity.ok(base64);
+    }
+
     @DeleteMapping("/delete/{id}")
 	public void deleteData(@PathVariable int id) {
     	mainService.deleteData(id);
 	}
-
     
-    
-    
+    @GetMapping("/get-vat-tax")
+    public List<RdbvrtrateModel> getVatTax() {
+    	return mainService.getVatTax();
+    }
 }

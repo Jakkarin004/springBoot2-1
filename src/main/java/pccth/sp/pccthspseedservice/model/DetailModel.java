@@ -6,9 +6,9 @@ import java.util.Date;
 public class DetailModel {
 	private Integer id;
 	private String vdtNo;
-	private String bookNo;
-	private Integer bookNum;
-	private Date dateMake;
+	private Integer bookNo;
+	private String bookNum;
+	private String dateMake;
 	private String nameCompany;
 	
 	private BigDecimal totalPrice;
@@ -18,12 +18,13 @@ public class DetailModel {
 	private BigDecimal refunfFr;
 	
 	
-	private Integer idName;
-	private Integer noBranch;
+	private String idName;
+	private String noBranch;
 	
 	private String createBy;
 	private Date createDate;
 	private Date updateDate;
+	private String updateBy;
 	
 	public Integer getId() {
 		return id;
@@ -37,22 +38,22 @@ public class DetailModel {
 	public void setVdtNo(String vdtNo) {
 		this.vdtNo = vdtNo;
 	}
-	public String getBookNo() {
+	public Integer getBookNo() {
 		return bookNo;
 	}
-	public void setBookNo(String bookNo) {
+	public void setBookNo(Integer bookNo) {
 		this.bookNo = bookNo;
 	}
-	public Integer getBookNum() {
+	public String getBookNum() {
 		return bookNum;
 	}
-	public void setBookNum(Integer bookNum) {
+	public void setBookNum(String bookNum) {
 		this.bookNum = bookNum;
 	}
-	public Date getDateMake() {
+	public String getDateMake() {
 		return dateMake;
 	}
-	public void setDateMake(Date dateMake) {
+	public void setDateMake(String dateMake) {
 		this.dateMake = dateMake;
 	}
 	public String getNameCompany() {
@@ -91,16 +92,16 @@ public class DetailModel {
 	public void setRefunfFr(BigDecimal refunfFr) {
 		this.refunfFr = refunfFr;
 	}
-	public Integer getIdName() {
+	public String getIdName() {
 		return idName;
 	}
-	public void setIdName(Integer idName) {
+	public void setIdName(String idName) {
 		this.idName = idName;
 	}
-	public Integer getNoBranch() {
+	public String getNoBranch() {
 		return noBranch;
 	}
-	public void setNoBranch(Integer noBranch) {
+	public void setNoBranch(String noBranch) {
 		this.noBranch = noBranch;
 	}
 	public String getCreateBy() {
@@ -127,5 +128,6 @@ public class DetailModel {
 	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
 	}
-	private String updateBy;
+	
+	
 }
